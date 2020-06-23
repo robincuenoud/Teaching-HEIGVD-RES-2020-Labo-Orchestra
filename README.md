@@ -106,11 +106,11 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
 | | *Insert your diagram here...* |
 |Question | Who is going to **send UDP datagrams** and **when**? |
-| | *Enter your response here...* |
+| | Les `Musician`envoie des `datagram` `UDP`  aux `Auditor`  chaque seconde. |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
-| | *Enter your response here...* |
+| | Les `Auditor` écoutent les `datagram` `UDP`, lors de la récéption d'un paquet, l'`Auditor` update son `JSONArray` avec les nouvelles informations et joue la note reçue sur sa console. |
 |Question | What **payload** should we put in the UDP datagrams? |
-| | *Enter your response here...* |
+| | Un `JSON` sous forme de `string` contenant l'`UUID` du `Musician`, un `timestamp` du dernier envoi et l'instrument utilisé. |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
 | | *Enter your response here...* |
 
@@ -120,21 +120,21 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
-| | *Enter your response here...*  |
+| | Si l'objet s'appelle `object`  alors : `JSON.stringify(object)` |
 |Question | What is **npm**?  |
-| | *Enter your response here...*  |
+| | Un gestionnaire de paquet pour `Nodejs`, il permet entre autres de gérer les dépendances. |
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?  |
-| | *Enter your response here...*  |
+| | Permet de télécharger et d'installer les dépendances du fichier `package.json` , `--save`permet d'ajouter à `package.json` la dépendance. |
 |Question | How can we use the `https://www.npmjs.com/` web site?  |
-| | *Enter your response here...*  |
+| | On peut rechercher des modules dont on a besoin. (par exemple `express` pour un serveur (sans avoir besoin d'implémenter pas mal de code nous même)). |
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122? |
-| | *Enter your response here...*  |
+|  | Grâce à ce module : [rfc4122](https://www.npmjs.com/package/rfc4122) (de `npmjs`) |
 |Question | In Node.js, how can we execute a function on a **periodic** basis? |
-| | *Enter your response here...*  |
+| | Avec la fonction `setInteval()` (doc : [setInterval](https://nodejs.org/api/timers.html#timers_setinterval_callback_delay_args)) |
 |Question | In Node.js, how can we **emit UDP datagrams**? |
-| | *Enter your response here...*  |
+| | Avec la librairie  [dgram](https://nodejs.org/api/dgram.html) |
 |Question | In Node.js, how can we **access the command line arguments**? |
-| | *Enter your response here...*  |
+|  | `process.argv` ou en utilisant des librairies  de [parsing d'arguments](https://nodejs.org/en/knowledge/command-line/how-to-parse-command-line-arguments/) |
 
 
 ## Task 3: package the "musician" app in a Docker image
@@ -142,17 +142,17 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | How do we **define and build our own Docker image**?|
-| | *Enter your response here...*  |
+| | `docker build -t <image_name> .` si le `Dockerfile` est dans le dossier courant (sinon remplacer `.` par le chemin d'accès). |
 |Question | How can we use the `ENTRYPOINT` statement in our Dockerfile?  |
-| | *Enter your response here...*  |
+|  | Pour lancer `node index.js` dans le container par exemple..  |
 |Question | After building our Docker image, how do we use it to **run containers**?  |
-| | *Enter your response here...*  |
+|  | `docker run -d <container_name> <args..> `  (`-d`  pour le lancer en `detach`  ) mais bon y'a plein d'autres options et tout et tout donc  faut regarder la [doc](https://docs.docker.com/).. (ou bien `man docker` ) |
 |Question | How do we get the list of all **running containers**?  |
-| | *Enter your response here...*  |
+|  | `docker ps`                                                  |
 |Question | How do we **stop/kill** one running container?  |
-| | *Enter your response here...*  |
+| | `docker stop/kill container_name` (sinon on regarde la doc hein..) |
 |Question | How can we check that our running containers are effectively sending UDP datagrams?  |
-| | *Enter your response here...*  |
+| | Si ca fonctionne c'est que ca marche :) Sinon `Wireshark` (super logiciel je recommande) |
 
 
 ## Task 4: implement an "auditor" Node.js application
@@ -160,15 +160,15 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | ---  |
 |Question | With Node.js, how can we listen for UDP datagrams in a multicast group? |
-| | *Enter your response here...*  |
+| | Avec la librairie `dgram` on peut `bind` , `listen` et `join` une adresse `multicast`. |
 |Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**?  |
-| | *Enter your response here...* |
+| | Ben c'est une `Map` donc des paire de `clef` `valeur` ([doc](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Map))  , `var maMap = new Map();` et ensuite `maMap.set(clef,valeur);` |
 |Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting?  |
-| | *Enter your response here...* |
+| | On regarde la [doc](https://momentjs.com/), `moment().format('MMMM Do YYYY, h:mm:ss a'); // June 23rd 2020, 3:53:46 pm` et on peut utiliser cette lib pour gérer les `Musician` actif ou pas. |
 |Question | When and how do we **get rid of inactive players**?  |
-| | *Enter your response here...* |
+| | En comparant les dates avec le temps actuel. |
 |Question | How do I implement a **simple TCP server** in Node.js?  |
-| | *Enter your response here...* |
+|  | Avec les exemple du cours. (avec `express` par exemple )     |
 
 
 ## Task 5: package the "auditor" app in a Docker image
@@ -176,7 +176,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | How do we validate that the whole system works, once we have built our Docker image? |
-| | *Enter your response here...* |
+| | Si le script de validation passe (et on peut aussi vérifier manuellement) ou en écrivant des tests par exemple :))) |
 
 
 ## Constraints
