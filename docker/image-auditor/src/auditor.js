@@ -49,7 +49,26 @@ function playerHandler(payload) {
      if(typeof foundMusician === 'undefined') {
         // il est pas encore dans le tableau
        musician.timestamp = moment();
+       musician.instrument = instruments.get(musician.sound)
        activePlayer.push(musician);
      }     
 }
 
+// partie TCP 
+const net = require('net');
+
+const serverTcp = net.createServer();
+serverTcp.listen(protocol.TCP_PORT, () => {
+    console.log('TCP Server is running on port ' + protocol.TCP_PORT +'.');
+});
+
+serverTcp.on('connection',function(socket) {
+    for(player in activePlayer) {
+        if(player.timestamp - moment() > 5) {
+            activePlayer.delete(player);
+        }
+    }
+    console.log("sending "+JSON.stringify(activePlayer))
+    socket.write(JSON.stringify(activePlayer))
+    socket.end()
+})
