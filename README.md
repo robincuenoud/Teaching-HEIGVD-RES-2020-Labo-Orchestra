@@ -168,7 +168,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | When and how do we **get rid of inactive players**?  |
 | | En comparant les dates avec le temps actuel. |
 |Question | How do I implement a **simple TCP server** in Node.js?  |
-|  | Avec les exemple du cours. (avec `express` par exemple )     |
+|  | Avec les exemple du cours. (avec `net` par exemple )         |
 
 
 ## Task 5: package the "auditor" app in a Docker image
