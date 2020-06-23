@@ -63,12 +63,23 @@ serverTcp.listen(protocol.TCP_PORT, () => {
 });
 
 serverTcp.on('connection',function(socket) {
-    for(player in activePlayer) {
-        if(player.timestamp - moment() > 5) {
-            activePlayer.delete(player);
-        }
-    }
+    
     console.log("sending "+JSON.stringify(activePlayer))
     socket.write(JSON.stringify(activePlayer))
     socket.end()
 })
+
+
+// supprime periodiquement les musiciens inactif
+setInterval(function () {
+  activePlayer.forEach( function (elem, index) {
+    var diff = elem.timestamp.diff(moment());
+    if(diff < -5000) {
+      activePlayer = activePlayer.filter(function (x) {
+          return x != elem;
+      })
+    }
+  });
+}, 1000);
+
+
