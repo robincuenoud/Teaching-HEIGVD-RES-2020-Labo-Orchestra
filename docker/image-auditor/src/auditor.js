@@ -49,6 +49,7 @@ function playerHandler(payload) {
      if(typeof foundMusician === 'undefined') {
         // il est pas encore dans le tableau
        musician.timestamp = moment();
+       musician.activeSince = musician.timestamp;
        musician.instrument = instruments.get(musician.sound)
        activePlayer.push(musician);
      }     
